@@ -24,8 +24,21 @@ export class UserService {
     })
   }
 
-  findOne(id: number) {
-    return this.usersRepository.findOne(id)
+  findOne(authRef: number|string) {
+    let filter: any = {}
+
+    if (typeof (authRef) === 'number') {
+      filter.id = authRef
+    } else {
+      filter = [
+        { email: authRef },
+        { username: authRef }
+      ]
+    }
+    return this.usersRepository.findOne({
+      where: filter,
+      relations: ['role']
+    })
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {

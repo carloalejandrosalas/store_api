@@ -1,10 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { EntityBase } from "src/entity-base"
+import { Column, Entity, ManyToOne } from "typeorm"
+import { Role } from "./role.entity"
 
 @Entity()
-export class User {
-    @PrimaryGeneratedColumn()
-    id: number
-
+export class User extends EntityBase {
     @Column({ length: 100, unique: true })
     email: string
 
@@ -17,12 +16,12 @@ export class User {
     @Column({ length: 45 })
     last_name: string
 
+    @Column()
+    password: string
+
     @Column({ default: true })
     is_active: boolean
-
-    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-    created_at: Date
-
-    @Column({ type: 'datetime', nullable: true })
-    updated_at: Date
+    
+    @ManyToOne(() => Role, type => type.users, {nullable: false} )
+    role: Role
 }
