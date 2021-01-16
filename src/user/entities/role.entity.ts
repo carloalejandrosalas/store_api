@@ -8,9 +8,6 @@ export class Role extends EntityBase {
     @Column({ length: 100, unique: true })
     name: string
 
-    @Column({ default: true })
-    is_active: boolean
-
     @OneToMany(() => User, user => user.role )
     users: User[]
 }

@@ -18,9 +18,6 @@ export class User extends EntityBase {
 
     @Column()
     password: string
-
-    @Column({ default: true })
-    is_active: boolean
     
     @ManyToOne(() => Role, type => type.users, {nullable: false} )
     role: Role
